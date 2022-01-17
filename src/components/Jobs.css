@@ -1,0 +1,105 @@
+:root {
+    --buttonColor: grey;
+    --minus: block;
+  }
+
+.posts {
+    flex-grow: 10;
+}
+
+.job {
+    box-sizing: border-box;
+    min-height: 20vh;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    margin: 5%;
+    padding: 20px;
+    position: relative;
+}
+
+.jobTitle {
+    text-align: left;
+    margin: 0;
+}
+    
+.jobInfo {
+    text-align: left;
+    margin-left: 20px;
+    color: grey;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.location {
+    color: grey;
+}
+
+.datePosted {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 10px;
+    font-size: small;
+    color: grey;
+}
+
+.jobDescription {
+    display: none;
+}
+
+.expandButton {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 50px;
+    width: 50px;
+    background-color: transparent;
+    border: none;
+}
+
+.expandButton::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    background-color: var(--buttonColor);
+    height: 10px;
+    margin-top: -5px;
+    top: 50%;
+    left: 5px;
+    right: 5px;
+    z-index: 10;
+  }
+  
+  .expandButton:hover::after,
+  .expandButton:hover::before {
+    background-color: lightgrey;
+  }
+  
+  .expandButton::before {
+    content: " ";
+    position: absolute;
+    display: var(--minus);
+    background-color: var(--buttonColor);
+    height: 10px;
+    margin-top: -5px;
+    top: 50%;
+    left: 5px;
+    right: 5px;
+    z-index: 10;
+    transform: rotate(90deg);
+  }
+
+  .apply-button {
+    background-color: grey;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    margin-right: 10px;
+  }

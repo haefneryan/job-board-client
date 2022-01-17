@@ -1,0 +1,16 @@
+
+.label {
+    text-align: right;
+    float: left;
+}
+
+input, select {
+    width: 80%;
+    float: right;
+}
+
+.postJob {
+    text-align: center;
+    width: 80vw;
+    margin: auto;
+}

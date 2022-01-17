@@ -1,0 +1,45 @@
+.filters {
+  top: 0;
+  border-right: 2px solid lightgrey;
+  width: 20%;
+  flex-grow: 1;
+  max-width: 220px;
+  min-width: 200px;
+}
+
+.filterInput {
+  display: inline-block;
+  border: 1px solid darkgrey;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+  
+.filterSelect {
+  display: inline-block;
+  border: 1px solid darkgrey;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-item {
+  display: inline-block;
+  width: 100%;
+}
+
+.filterRadio {
+  width: 50px;
+}
+
+label {
+  text-align: right;
+}
