@@ -5,6 +5,13 @@
   flex-grow: 1;
   max-width: 220px;
   min-width: 200px;
+  padding: 10px;
+}
+
+.filtersTitle {
+  box-sizing: border-box;
+  border: 1px solid white;
+  padding: 10px;
 }
 
 .filterInput {
@@ -17,6 +24,7 @@
   padding-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
   
 .filterSelect {
@@ -29,6 +37,7 @@
   padding-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .form-item {
@@ -36,10 +45,17 @@
   width: 100%;
 }
 
+.radiolabel {
+  display: inline-block;
+  width: 50%;
+}
+
 .filterRadio {
-  width: 50px;
+  display: inline-block;
+  width: 50%;
 }
 
 label {
-  text-align: right;
+  display: block;
+  text-align: left;
 }

@@ -1,16 +1,23 @@
 
-.label {
-    text-align: right;
-    float: left;
-}
-
-input, select {
-    width: 80%;
-    float: right;
-}
-
 .postJob {
     text-align: center;
-    width: 80vw;
+    width: 70vw;
     margin: auto;
+}
+
+.category {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.label {
+    text-align: right;
+}
+
+.create-input {
+    width: 70%;
+    border: 1px solid white;
+    padding: 5px;
+    float: right;
 }

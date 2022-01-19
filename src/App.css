@@ -21,7 +21,11 @@ h1 {
 .job-container {
   display: flex;
   text-align: center;
-  width: 80vw;
+  width: 90vw;
   margin: auto;
   margin-top: 50px;
+}
+
+.jobsinfo {
+  text-align: center;
 }

@@ -19,6 +19,8 @@ function App() {
     remote: false,
     onsite: false
   })
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(5);
 
   useEffect(() => {
     const getData = async () => {
@@ -32,7 +34,6 @@ function App() {
 
   useEffect(() => {
     if (data !== null) {
-      //let result = [];
       let result = data;
       if (filters.jobTitle.length > 0) {
         result = result.filter((x) => {
@@ -53,7 +54,15 @@ function App() {
       if (filters.senorityLevel.length > 0) {
         result = result.filter((x) => {
           let senority_Level = x.senorityLevel.toLowerCase();
-          if (senority_Level === filters.senorityLevel || senority_Level === 'any') {
+          if (senority_Level === filters.senorityLevel) {
+            return x;
+          }
+        })
+      }
+      if (filters.location.length > 0) {
+        result = result.filter((x) => {
+          let location = x.location.toLowerCase();
+          if (location === filters.location) {
             return x;
           }
         })
@@ -72,8 +81,7 @@ function App() {
           }
         })
       }
-      
-      if (filters.jobTitle.length === 0 && filters.companyName.length === 0 && filters.senorityLevel.length === 0 && filters.remote === false && filters.onsite === false) {
+      if (filters.jobTitle.length === 0 && filters.companyName.length === 0 && filters.senorityLevel.length === 0 && filters.location.length === 0 && filters.remote === false && filters.onsite === false) {
         setFilteredData(data)
       } else {
         setFilteredData(result)
@@ -82,24 +90,13 @@ function App() {
     }
   }, [filters])
 
-  const filterJobTitle = (e) => {
+  const filter = () => {
     setFilters({
       ...filters,
-      jobTitle: e.target.value
-    })
-  }
-
-  const filterCompanyName = (e) => {
-    setFilters({
-      ...filters,
-      companyName: e.target.value.toLowerCase()
-    })
-  }
-
-  const filterSeniorityLevel = (e) => {
-    setFilters({
-      ...filters,
-      senorityLevel: e.target.value.toLowerCase()
+      jobTitle: document.getElementById('jobTitle').value,
+      companyName: document.getElementById('companyName').value,
+      senorityLevel: document.getElementById('experience').value,
+      location: document.getElementById('location').value
     })
   }
 
@@ -135,25 +132,25 @@ function App() {
   }
 
   const addJob = () => {
-    if (document.getElementById('companyName').value === '' || document.getElementById('jobDescription').value === '' || document.getElementById('jobTitle').value === '') {
+    if (document.getElementById('create_companyName').value === '' || document.getElementById('create_jobDescription').value === '' || document.getElementById('create_jobTitle').value === '') {
       alert('Please fill out all fields')
     } else {
       let remoteValue;
-      if (document.getElementById('location').value === 'Remote (USA)') {
-        remoteValue = true
+      if (document.getElementById('create_location').value === 'Remote (USA)') {
+        remoteValue = true;
       } else {
-        remoteValue = false
+        remoteValue = false;
       }
       axios.post(`${url}posts`, {
         active: true,
-        companyName: document.getElementById('companyName').value,
+        companyName: document.getElementById('create_companyName').value,
         datePosted: getDate(),
         displayJobDescription: false,
-        jobDescription: document.getElementById('jobDescription').value,
-        jobTitle: document.getElementById('jobTitle').value,
-        location: document.getElementById('location').value,
+        jobDescription: document.getElementById('create_jobDescription').value,
+        jobTitle: document.getElementById('create_jobTitle').value,
+        location: document.getElementById('create_location').value,
         remote: remoteValue,
-        senorityLevel: document.getElementById('experience').value
+        senorityLevel: document.getElementById('create_experience').value
       })
         document.getElementById('create_companyName').value = '';
         document.getElementById('create_jobDescription').value = '';
@@ -175,17 +172,23 @@ function App() {
     document.getElementById('all').checked = true;
   }
 
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+
   if (data !== null && filteredData !== null) {
     return (
       <div className="App">
         <h1>Job Board</h1>
-        <p>({filteredData.length}) Jobs</p>
         <Routes>
           <Route exact path='/' element={
-            <div className='job-container'>
-              <Filters filterJobTitle={filterJobTitle} filterCompanyName={filterCompanyName} filterSeniorityLevel={filterSeniorityLevel} filterRemote={filterRemote} clearFilters={clearFilters}/>
-              {filteredData.length === 0 ? <p className='text'>-- No Jobs --</p> : <Jobs filteredData={filteredData} apply={apply}/>}
+            <>
+              <p className='jobsinfo'>({filteredData.length}) Jobs</p>
+              <div className='job-container'>
+                <Filters filter={filter} filterRemote={filterRemote} clearFilters={clearFilters} data={data}/>
+                {filteredData.length === 0 ? <p className='text'>-- No Jobs --</p> : <Jobs filteredData={filteredData} apply={apply}/>}
               </div>
+            </>
           }>
           </Route>
           <Route exact path='/post-job' element={<CreateJobPost addJob={addJob}/>}/>

@@ -43,7 +43,7 @@ function Jobs(props) {
                                 </div>
                                 <div>
                                     <p className='info'>{job.location}</p>
-                                    {job.remote ? <p className='info location'>(Remote)</p> : <p className='info location'>(On-site)</p>}
+                                    {job.remote ? '' : <p className='info location'>(On-site)</p>}
                                 </div>
                             </div>
                             
