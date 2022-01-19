@@ -1,9 +1,9 @@
 import React from 'react';
+import { addJob } from '../components/PostJob';
 
-import classes from './CreateJobPost.css'
+import './CreateJobPost.css';
 
-function CreateJobPost(props) {
-    const { addJob } = props;
+function CreateJobPost() {
 
     return (
         <div className='postJob'>

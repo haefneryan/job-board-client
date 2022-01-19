@@ -1,0 +1,37 @@
+.boundingbox {
+    width: 20vw;
+}
+
+.pagination-bar {
+    display: flex;
+    position: relative;
+    bottom: 0px;
+    margin: auto;
+    justify-content: space-around;
+}
+
+.pagination-item {
+    width: 50px;
+    height: 50px;
+    list-style-type: none;
+    cursor: pointer;
+    border: 1px solid grey;
+}
+
+.active, .pagination-item:hover  {
+    background-color: white;
+}
+
+.active p {
+    color: #262626;
+}
+
+.pagination-item:hover p{
+    color: #262626;
+}
+
+.page-numbers {
+    background-color: transparent;
+    text-align: center;
+    margin: 0px;
+}

@@ -4,6 +4,7 @@ import './App.css';
 import Jobs from './components/Jobs';
 import Filters from './components/Filters';
 import CreateJobPost from './pages/CreateJobPost';
+import Pagination from './components/Pagination';
 
 import axios from 'axios';
 
@@ -20,7 +21,7 @@ function App() {
     onsite: false
   })
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage] = useState(5);
 
   useEffect(() => {
     const getData = async () => {
@@ -86,7 +87,6 @@ function App() {
       } else {
         setFilteredData(result)
       }
-      console.log(filters)
     }
   }, [filters])
 
@@ -100,7 +100,7 @@ function App() {
     })
   }
 
-  const filterRemote = (e) => {
+  const filterRemote = () => {
     if (document.getElementById('all').checked) {
       setFilters({
         ...filters,
@@ -122,44 +122,6 @@ function App() {
     }
   }
 
-  const getDate = () => {
-    let today = new Date()
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0')
-    let yyyy = today.getFullYear()
-    today = yyyy + '-' + mm + '-' + dd
-    return today
-  }
-
-  const addJob = () => {
-    if (document.getElementById('create_companyName').value === '' || document.getElementById('create_jobDescription').value === '' || document.getElementById('create_jobTitle').value === '') {
-      alert('Please fill out all fields')
-    } else {
-      let remoteValue;
-      if (document.getElementById('create_location').value === 'Remote (USA)') {
-        remoteValue = true;
-      } else {
-        remoteValue = false;
-      }
-      axios.post(`${url}posts`, {
-        active: true,
-        companyName: document.getElementById('create_companyName').value,
-        datePosted: getDate(),
-        displayJobDescription: false,
-        jobDescription: document.getElementById('create_jobDescription').value,
-        jobTitle: document.getElementById('create_jobTitle').value,
-        location: document.getElementById('create_location').value,
-        remote: remoteValue,
-        senorityLevel: document.getElementById('create_experience').value
-      })
-        document.getElementById('create_companyName').value = '';
-        document.getElementById('create_jobDescription').value = '';
-        document.getElementById('create_jobTitle').value = '';
-        document.getElementById('create_location').value = 'Remote (USA)';
-        document.getElementById('create_experience').value = '';
-    }
-  }
-
   const apply = () => {
     console.log('apply')
   }
@@ -170,28 +132,34 @@ function App() {
     document.getElementById('companyName').value = '';
     document.getElementById('experience').value = '';
     document.getElementById('all').checked = true;
+    document.getElementById('location').value = '';
   }
 
-  // const indexOfLastPost = currentPage * postsPerPage;
-  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  // const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+  const paginate = (number) => {
+    setCurrentPage(number)
+  }
 
   if (data !== null && filteredData !== null) {
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
+
     return (
       <div className="App">
         <h1>Job Board</h1>
         <Routes>
           <Route exact path='/' element={
             <>
-              <p className='jobsinfo'>({filteredData.length}) Jobs</p>
+              <p className='jobsinfo'>Viewing Jobs ({indexOfFirstPost + 1}) - ({Math.min(indexOfLastPost, filteredData.length)}) of ({filteredData.length}) Jobs</p>
               <div className='job-container'>
                 <Filters filter={filter} filterRemote={filterRemote} clearFilters={clearFilters} data={data}/>
-                {filteredData.length === 0 ? <p className='text'>-- No Jobs --</p> : <Jobs filteredData={filteredData} apply={apply}/>}
+                {filteredData.length === 0 ? <p className='text'>-- No Jobs --</p> : <Jobs filteredData={currentPosts} apply={apply}/>}
               </div>
+              <Pagination postsPerPage={postsPerPage} totalPosts={filteredData.length} currentPage={currentPage} paginate={paginate}/>
             </>
           }>
           </Route>
-          <Route exact path='/post-job' element={<CreateJobPost addJob={addJob}/>}/>
+          <Route exact path='/post-job' element={<CreateJobPost />}/>
         </Routes>
       </div>
     );

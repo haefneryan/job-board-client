@@ -29,3 +29,7 @@ h1 {
 .jobsinfo {
   text-align: center;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+}

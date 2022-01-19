@@ -1,4 +1,5 @@
 .filters {
+  height: 100vh;
   top: 0;
   border-right: 2px solid lightgrey;
   width: 20%;

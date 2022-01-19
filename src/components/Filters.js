@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './Filters.css';
+import './Filters.css';
 
 function Filters(props) {
     const { filter, filterRemote, clearFilters, data } = props;
@@ -45,15 +45,15 @@ function Filters(props) {
             <form>
                 <div className='form-item'>
                     <p className='radiolabel'>All: </p>
-                    <input type='radio' className='filterRadio' name='remote' id='all' defaultChecked onChange={(e) => filterRemote(e)}/>
+                    <input type='radio' className='filterRadio' name='remote' id='all' defaultChecked onChange={() => filterRemote()}/>
                 </div>
                 <div className='form-item'>
                     <label className='radiolabel'>Remote Only:</label>
-                    <input type='radio' className='filterRadio' name='remote' id='remoteOnly' defaultValue={false} onChange={(e) => filterRemote(e)}/>
+                    <input type='radio' className='filterRadio' name='remote' id='remoteOnly' defaultValue={false} onChange={() => filterRemote()}/>
                 </div>
                 <div className='form-item'>
                     <label className='radiolabel'>On-Site Only:</label>
-                    <input type='radio' className='filterRadio' name='remote' id='onSiteOnly' defaultValue={false} onChange={(e) => filter(e)}/>
+                    <input type='radio' className='filterRadio' name='remote' id='onSiteOnly' defaultValue={false} onChange={() => filterRemote()}/>
                 </div>
             </form>
             <br></br>
