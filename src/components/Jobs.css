@@ -4,8 +4,7 @@
   }
 
 .posts {
-    padding: 30px;
-    flex-grow: 5;
+    flex-grow: 10;
 }
 
 .job {

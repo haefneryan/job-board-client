@@ -2,8 +2,11 @@
   height: 100vh;
   top: 0;
   border-right: 2px solid lightgrey;
-  padding: 30px;
-  flex-shrink: 4;
+  width: 20%;
+  flex-grow: 1;
+  max-width: 220px;
+  min-width: 200px;
+  padding: 10px;
 }
 
 .filtersTitle {
@@ -45,14 +48,12 @@
 
 .radiolabel {
   display: inline-block;
-  width: 30%;
-  margin: 0;
-  text-align: right;
+  width: 50%;
 }
 
 .filterRadio {
   display: inline-block;
-  width: 50px;
+  width: 50%;
 }
 
 label {

@@ -1,6 +1,5 @@
 .boundingbox {
     width: 20vw;
-    margin: auto;
 }
 
 .pagination-bar {
@@ -9,8 +8,6 @@
     bottom: 0px;
     margin: auto;
     justify-content: space-around;
-    padding: 0;
-    justify-content: flex-start;
 }
 
 .pagination-item {
