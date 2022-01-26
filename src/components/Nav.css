@@ -1,0 +1,48 @@
+
+h1 {
+    box-sizing: border-box;
+    text-align: center;
+    height: 100px;
+    margin: 0;
+    color: white;
+    background-color: darkgreen;
+    border-bottom: 5px solid black;
+    line-height: 100px;
+}
+
+header * {
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+
+ul {
+    margin-top: 0px;
+    height: 50px;
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+    padding-left: 0px;
+}
+
+li {
+    text-align: center;
+    background-color: green;
+    text-decoration: none;
+    width: 35%;
+}
+
+li:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+a {
+    position: relative;
+}
+
+li p {
+    background-color: transparent;
+    margin: 0px;
+    line-height: 50px;
+}

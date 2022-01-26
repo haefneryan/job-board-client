@@ -3,7 +3,8 @@
   top: 0;
   border-right: 2px solid lightgrey;
   padding: 30px;
-  flex-shrink: 4;
+  flex: 30%;
+  min-width: 30%;
 }
 
 .filtersTitle {
@@ -12,11 +13,7 @@
   padding: 10px;
 }
 
-.filterInput {
-  display: inline-block;
-  border: 1px solid darkgrey;
-  box-sizing: border-box;
-  width: 100%;
+input, select {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
@@ -24,18 +21,18 @@
   margin-bottom: 10px;
   border-radius: 10px;
 }
+
+.filterInput {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  
+}
   
 .filterSelect {
   display: inline-block;
-  border: 1px solid darkgrey;
   box-sizing: border-box;
   width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
 }
 
 .form-item {

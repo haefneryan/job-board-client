@@ -1,25 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import Jobs from './components/Jobs';
-import Filters from './components/Filters';
-import CreateJobPost from './pages/CreateJobPost';
-import Pagination from './components/Pagination';
-
 import axios from 'axios';
+
+import AllJobPosts from './pages/AllJobPosts';
+import CreateJobPost from './pages/CreateJobPost';
+import UpdateJobPost from './pages/UpdateJobPost';
+import Nav from './components/Nav';
+
+import { filtersDefaultState } from './components/functions/filtersDefaultState';
+
+import './App.css';
 
 function App() {
   const url = 'https://job-board-server-haefneryan.herokuapp.com/';
   const [data, setData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
-  const [filters, setFilters] = useState({
-    jobTitle: '',
-    companyName: '',
-    senorityLevel: '',
-    location: '',
-    remote: false,
-    onsite: false
-  })
+  const [filters, setFilters] = useState(filtersDefaultState)
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
@@ -35,13 +31,25 @@ function App() {
 
   useEffect(() => {
     if (data !== null) {
+      console.log(data)
+      data.forEach(x => {
+        return (
+          x.editingMode = false,
+          x.displayJobDescription = false
+        )
+      })
+    }
+  }, [data]);
+  
+  useEffect(() => {
+    if (data !== null) {
       let result = data;
       if (filters.jobTitle.length > 0) {
         result = result.filter((x) => {
           let title = x.jobTitle.toLowerCase()
           if (title.includes(`${filters.jobTitle}`)) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.companyName.length > 0) {
@@ -49,7 +57,7 @@ function App() {
           let company = x.companyName.toLowerCase();
           if (company.includes(`${filters.companyName}`)) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.senorityLevel.length > 0) {
@@ -57,7 +65,7 @@ function App() {
           let senority_Level = x.senorityLevel.toLowerCase();
           if (senority_Level === filters.senorityLevel) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.location.length > 0) {
@@ -65,21 +73,21 @@ function App() {
           let location = x.location.toLowerCase();
           if (location === filters.location) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.remote === true) {
         result = result.filter((x) => {
           if (x.remote === filters.remote) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.onsite === true) {
         result = result.filter((x) => {
           if (!x.location.includes('Remote')) {
             return x;
-          }
+          } else { return null }
         })
       }
       if (filters.jobTitle.length === 0 && filters.companyName.length === 0 && filters.senorityLevel.length === 0 && filters.location.length === 0 && filters.remote === false && filters.onsite === false) {
@@ -88,7 +96,7 @@ function App() {
         setFilteredData(result)
       }
     }
-  }, [filters])
+  }, [data, filters])
 
   const filter = () => {
     setFilters({
@@ -122,10 +130,6 @@ function App() {
     }
   }
 
-  const apply = () => {
-    console.log('apply')
-  }
-
   const clearFilters = () => {
     setFilters({ jobTitle: '', companyName: '', senorityLevel: '', location: '', remote: false, onsite: false });
     document.getElementById('jobTitle').value = '';
@@ -139,27 +143,52 @@ function App() {
     setCurrentPage(number)
   }
 
+  const displayJobDescription = (job) => {
+    if(job.displayJobDescription) {
+      setFilteredData([...filteredData, filteredData[filteredData.indexOf(job)].displayJobDescription = false])
+    } else {
+      setFilteredData([...filteredData, filteredData[filteredData.indexOf(job)].displayJobDescription = true])
+    }
+  }
+  
+  const editJob = (job) => {
+    if(job.editingMode) {
+      let r = (window.confirm('Are you sure you want to make these changes?'))
+      if (r) {
+        axios.put(`${url}posts/${job._id}`, { 
+          jobTitle: document.getElementById(`editedJobTitle_${data.indexOf(job)}`).value,
+          companyName: document.getElementById(`editedCompanyName_${data.indexOf(job)}`).value,
+          senorityLevel: document.getElementById(`editedSenorityLevel_${data.indexOf(job)}`).value,
+          location: document.getElementById(`editedLocation_${data.indexOf(job)}`).value,
+          jobDescription: document.getElementById(`editedJobDescription_${data.indexOf(job)}`).value
+        })
+        setFilteredData([...filteredData, 
+          filteredData[filteredData.indexOf(job)].jobTitle = document.getElementById(`editedJobTitle_${data.indexOf(job)}`).value,
+          filteredData[filteredData.indexOf(job)].companyName = document.getElementById(`editedCompanyName_${data.indexOf(job)}`).value,
+          filteredData[filteredData.indexOf(job)].senorityLevel = document.getElementById(`editedSenorityLevel_${data.indexOf(job)}`).value,
+          filteredData[filteredData.indexOf(job)].location = document.getElementById(`editedLocation_${data.indexOf(job)}`).value,
+          filteredData[filteredData.indexOf(job)].jobDescription = document.getElementById(`editedJobDescription_${data.indexOf(job)}`).value,
+          filteredData[filteredData.indexOf(job)].editingMode = false
+        ])
+      }
+    } else {
+      setFilteredData([...filteredData, filteredData[filteredData.indexOf(job)].editingMode = true ])
+    }
+  }
+
+  const cancelEditJob = (job) => {
+    setFilteredData([...filteredData, filteredData[filteredData.indexOf(job)].editingMode = false ])
+  }
+
   if (data !== null && filteredData !== null) {
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
 
     return (
       <div className="App">
-        <h1>Job Board</h1>
+        <Nav />
         <Routes>
-          <Route exact path='/' element={
-            <>
-              <p className='jobsinfo'>Viewing Jobs ({indexOfFirstPost + 1}) - ({Math.min(indexOfLastPost, filteredData.length)}) of ({filteredData.length}) Jobs</p>
-              <div className='job-container'>
-                <Filters filter={filter} filterRemote={filterRemote} clearFilters={clearFilters} data={data}/>
-                {filteredData.length === 0 ? <p className='text'>-- No Jobs --</p> : <Jobs filteredData={currentPosts} apply={apply}/>}
-              </div>
-              <Pagination postsPerPage={postsPerPage} totalPosts={filteredData.length} currentPage={currentPage} paginate={paginate}/>
-            </>
-          }>
-          </Route>
+          <Route exact path='/' element={<AllJobPosts data={data} filteredData={filteredData} currentPage={currentPage} postsPerPage={postsPerPage} filter={filter} filterRemote={filterRemote} clearFilters={clearFilters} paginate={paginate} displayJobDescription={displayJobDescription}/>}/>
           <Route exact path='/post-job' element={<CreateJobPost />}/>
+          <Route exact path='/update-job' element={<UpdateJobPost data={data} editJob={editJob} cancelEditJob={cancelEditJob}/>}/>
         </Routes>
       </div>
     );

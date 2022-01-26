@@ -15,9 +15,32 @@
     text-align: right;
 }
 
-.create-input {
-    width: 70%;
-    border: 1px solid white;
-    padding: 5px;
+.create-text-input {
+    width: 75%;
     float: right;
+}
+
+.create-select-input {
+    width: 76.5%;
+    float: right;
+}
+
+textarea {
+    margin-right: 0px;
+}
+
+.submitBtn {
+    background-color: #4d4d4d;
+    border: 1px solid white;
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 5px;
+}
+
+.submitBtn:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
 }

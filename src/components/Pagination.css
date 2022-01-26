@@ -19,6 +19,7 @@
     list-style-type: none;
     cursor: pointer;
     border: 1px solid grey;
+    background-color: transparent;
 }
 
 .active, .pagination-item:hover  {

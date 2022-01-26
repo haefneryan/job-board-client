@@ -2,20 +2,12 @@
 * {
   background-color: #262626;
   color: white;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .text{
   width: 100%;
   text-align: center;
-}
-
-h1 {
-  box-sizing: border-box;
-  text-align: center;
-  height: 15vh;
-  margin: 0;
-  color: white;
-  background-color: darkgreen;
 }
 
 .job-container {
@@ -30,6 +22,8 @@ h1 {
   text-align: center;
 }
 
-::-webkit-scrollbar {
-  width: 0;
+input, textarea, select {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
 }

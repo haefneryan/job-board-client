@@ -57,7 +57,7 @@ function Filters(props) {
                 </div>
             </form>
             <br></br>
-            <button onClick={() => clearFilters()}>Clear Filters</button>
+            <button className='submitBtn' onClick={() => clearFilters()}>Clear Filters</button>
         </div>
     )
 }

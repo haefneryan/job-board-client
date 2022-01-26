@@ -1,0 +1,40 @@
+.editButton {
+    width: 100px;
+    position: absolute;
+    right: 10px;
+    top: 10px
+}
+
+.cancelButton {
+    width: 100px;
+    position: absolute;
+    right: 10px;
+    top: 80px
+}
+
+.updateJobPost {
+    width: 80vw;
+    margin: auto;
+}
+
+.companyNameSearch {
+    width: 200px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+}
+
+.btn {
+    background-color: #4d4d4d;
+    border: 1px solid white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+}
