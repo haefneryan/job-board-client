@@ -1,8 +1,6 @@
-
 import { getDate } from './GetDate';
 import axios from 'axios';
-
-const url = 'https://job-board-server-haefneryan.herokuapp.com/';
+import { url } from './url';
 
 export const addJob = () => {
     if (document.getElementById('create_companyName').value === '' || document.getElementById('create_jobDescription').value === '' || document.getElementById('create_jobTitle').value === '') {

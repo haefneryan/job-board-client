@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import JobCard from '../components/JobCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { editJob, cancelEditJob, submitEditJob } from '../actions/filteredDataActions';
+import { updateJobDB } from '../functions/updateJob';
+import JobCard from '../components/JobCard/JobCard';
 
 import './UpdateJobPost.css'
 
-function UpdateJobPost(props) {
-    const { data, editJob, cancelEditJob } = props;
+function UpdateJobPost() {
+    document.title = 'RH Job Board - Update Job'
+    const state = useSelector(state => state.data)
+    const dispatch = useDispatch();
     const [ displayedPosts, setDisplayedPosts ] = useState([])
 
     window.addEventListener('keydown', (e) => {
@@ -16,14 +21,13 @@ function UpdateJobPost(props) {
     const searchForJob = () => {
         setDisplayedPosts([])
         let res = document.getElementById('companyNameSearch').value
-        data.forEach(x => {
+        state.forEach(x => {
             if (x.companyName.toLowerCase().includes(`${res.toLowerCase()}`)) {
                 setDisplayedPosts(displayedPosts => displayedPosts.concat(x))
             }
         })
     }
 
-    let index = 0
     return (
         <div className='updateJobPost'>
             <h2>Update Job Post</h2>
@@ -31,16 +35,15 @@ function UpdateJobPost(props) {
             <input className='companyNameSearch' id='companyNameSearch'></input><button className='submitBtn' onClick={() => searchForJob()}>Submit</button>
             <p>Results ({displayedPosts.length}):</p>
             {displayedPosts.map(job => {
-                index++;
                 return (
-                    <JobCard key={job._id} index={index} data={data} job={job}>
+                    <JobCard key={job._id} job={job}>
                         {job.editingMode ? 
                             <>
-                                <button className='editButton btn' onClick={() => editJob(job)}>SUBMIT</button>
-                                <button className='cancelButton btn' onClick={() => cancelEditJob(job)}>CANCEL</button>
+                                <button className='submitButton btn' onClick={() => {updateJobDB(state, job); dispatch(submitEditJob(state, job))}}>SUBMIT</button>
+                                <button className='cancelButton btn' onClick={() => dispatch(cancelEditJob(job))}>CANCEL</button>
                             </> : 
                             <>
-                                <button className='editButton btn' onClick={() => editJob(job)}>EDIT</button>
+                                <button className='editButton btn' onClick={() => {dispatch(editJob(job))}}>EDIT</button>
                                 <p className='jobDescription'>{job.jobDescription}</p>
                             </>
                         }

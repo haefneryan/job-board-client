@@ -1,5 +1,4 @@
-
-export const filtersDefaultState = {
+export const filtersInitialState = {
     jobTitle: '',
     companyName: '',
     senorityLevel: '',

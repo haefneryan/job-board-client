@@ -1,10 +1,11 @@
 import React from 'react';
-import LocationSelect from '../components/functions/LocationSelect';
-import { addJob } from '../components/functions/AddJob';
+import LocationSelect from '../functions/LocationSelect';
+import { addJob } from '../functions/AddJob';
 
 import './CreateJobPost.css';
 
 function CreateJobPost() {
+    document.title = 'RH Job Board - Post New Job'
 
     return (
         <div className='postJob'>

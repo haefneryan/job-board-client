@@ -1,0 +1,1 @@
+export const url = 'https://job-board-server-haefneryan.herokuapp.com/'

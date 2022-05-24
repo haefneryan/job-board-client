@@ -9,6 +9,13 @@
     width: 100px;
     position: absolute;
     right: 10px;
+    top: 10px
+}
+
+.submitButton {
+    width: 100px;
+    position: absolute;
+    right: 10px;
     top: 80px
 }
 
